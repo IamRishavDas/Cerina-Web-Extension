@@ -1,32 +1,16 @@
-
-
-
 let videoId = "";
 let summaryCount = 0;
 const FREE_LIMIT = 2;
-const OPENAI_API_KEY = 'sk-proj-TmD7dqNk4l0Al1IHc1ufT3BlbkFJDsIxPiLY27v7SSmIyGkQ';
-const RAPIDAPI_KEY_SUMMARY = '089cd241f5msh667559377056ecep194c13jsn017d474e34bf';
-const RAPIDAPI_HOST_SUMMARY = 'yt-api.p.rapidapi.com';
-const RAPIDAPI_KEY_TRANSCRIPT = '8dac6764bemshdf021d22c47d915p18f214jsn0c07e1cd4fe5';
-// '43e75b6581msh0296fd5efec27f9p1d06dcjsnc2a33fd03964';
-// '394fc35840msh120a1f47e581ba7p13d724jsn95cbbc302270';
-// '089cd241f5msh667559377056ecep194c13jsn017d474e34bf';
-const RAPIDAPI_HOST_TRANSCRIPT = 'youtube-transcriptor.p.rapidapi.com';
 
 document.addEventListener('DOMContentLoaded', function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         let url = new URL(tabs[0].url);
-        // console.log("Current URL:", url.href);
 
         if (url.hostname === "www.youtube.com" && url.pathname === "/watch") {
             videoId = url.searchParams.get("v");
-            // console.log("Video ID:", videoId);
             fetchTranscript(videoId)
-            // fetchSummary(videoId);
             fetchNotes(videoId);
-        } else {
-            // document.getElementById("summary").innerText = "Please navigate to a YouTube video.";
-        }
+        } else { }
     });
 });
 
@@ -67,15 +51,11 @@ async function getTranscriptFromRapidAPI(videoId) {
 
     try {
         const requestURL = `https://${RAPIDAPI_HOST_TRANSCRIPT}/transcript?video_id=${videoId}&lang=en`;
-        // console.log("Trasncript request URL: ", requestURL);
         const response = await fetch(requestURL, options);
-        // console.log("Trasncript respone: ", response);
         if (!response.ok) {
             throw new Error(`Error fetching transcript: ${response.statusText}`);
         }
         const data = await response.json();
-        // console.log("JSON Data: ", data)
-        // console.log("data.transcription: ", data.transcription)
         return extractTranscript(data) || "No transcript available for this video.";
     } catch (error) {
         console.error("Error fetching transcript from RapidAPI: ", error);
@@ -100,10 +80,8 @@ async function fetchSummaryFromOpenAiAPI(transcriptAsText) {
 
         if (summaryCount < FREE_LIMIT) {
             try {
-                // console.log("summary called");
 
                 let summary = await getSummaryFromOpenAiApi(transcriptAsText);
-                // console.log("fetchSummary: ", summary);
 
                 document.getElementById('summary').innerText = summary;
                 chrome.storage.local.set({ ['summary_' + videoId]: summary });
@@ -128,15 +106,12 @@ const maxPromptTokens = maxTokens - 500;
 async function getSummaryFromOpenAiApi(transcriptAsText) {
     const apiKey = OPENAI_API_KEY;
 
-    console.log("before truncate: ", transcriptAsText)
-
     const estimatedTokens = Math.ceil(transcriptAsText.length/4);
     if(estimatedTokens> maxPromptTokens){
         const maxLength = Math.floor(maxPromptTokens * 4);
         transcriptAsText =  transcriptAsText.slice(0, maxLength);
     }
     
-    console.log("after truncate: ", transcriptAsText);
     if (summaryCount < FREE_LIMIT) {
         try {
             const response = await fetch('https://api.openai.com/v1/completions', {
@@ -148,7 +123,7 @@ async function getSummaryFromOpenAiApi(transcriptAsText) {
                 body: JSON.stringify({
                     model: 'gpt-3.5-turbo-instruct', // maxTokens = 4096
                     prompt: `Summarize the following transcript:\n\n${transcriptAsText}`,
-                    max_tokens: 100,
+                    max_tokens: 400,
                     temperature: 0.7
                 })
             });
@@ -173,10 +148,8 @@ async function fetchSummary(videoId) {
 
         if (summaryCount < FREE_LIMIT) {
             try {
-                // console.log("summary called");
 
                 let summary = await getSummaryFromRapidAPI(videoId);
-                // console.log("fetchSummary: ", summary);
 
                 document.getElementById('summary').innerText = summary;
                 chrome.storage.local.set({ ['summary_' + videoId]: summary });
@@ -205,9 +178,7 @@ async function getSummaryFromRapidAPI(videoId) {
 
     try {
         const targetURL = `https://yt-api.p.rapidapi.com/dl?id=${videoId}`;
-        // console.log(targetURL)
         const response = await fetch(targetURL, options);
-        // console.log(response);
         if (!response.ok) {
             throw new Error(`Error fetching summary: ${response.statusText}`);
         }
