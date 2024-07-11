@@ -2,6 +2,7 @@ let videoId = "";
 let summaryCount = 0;
 const FREE_LIMIT = 2;
 
+
 document.addEventListener('DOMContentLoaded', function () {
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         let url = new URL(tabs[0].url);
