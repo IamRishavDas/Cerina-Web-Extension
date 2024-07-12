@@ -1,15 +1,55 @@
 let videoId = "";
 let summaryCount = 0;
-const FREE_LIMIT = 2;
+const FREE_LIMIT = 3;
+const MAX_SUB_LIMIT = 2;
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
+    const showTranscriptBtn = document.querySelector('#transcript .btn-popup');
+    const showSummaryBtn = document.querySelector('#summary .btn-popup');
+    const popupContainer = document.querySelector('.popup');
+
+    function showPopup(content) {
+        console.log(content);
+        popupContainer.innerHTML = `<div class="popup-content">${content}</div>
+                                    <div class="btns"><img src="icons/copyIcon.png" class="copy"></img><span class="popup-close">&times;</span></div>`;
+        popupContainer.classList.add('active');
+    }
+
+    // Function to close the popup
+    function closePopup() {
+        popupContainer.classList.remove('active');
+        popupContainer.innerHTML = ''; // Clear popup content
+    }
+
+    showTranscriptBtn.addEventListener('click', function () {
+        const transcriptContent = document.getElementById('transcript').innerHTML;
+        showPopup(transcriptContent);
+        // document.querySelector('.btns').addEventListener('click', ()=>{
+            
+        // });
+        document.querySelector('.popup-close').addEventListener('click', ()=>{
+            closePopup();
+        });
+    });
+
+    showSummaryBtn.addEventListener('click', function () {
+        const summaryContent = document.getElementById('summary').innerHTML;
+        showPopup(summaryContent);
+        
+        document.querySelector('.popup-close').addEventListener('click', ()=>{
+            closePopup();
+        });
+    });
+
+
     chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
         let url = new URL(tabs[0].url);
 
         if (url.hostname === "www.youtube.com" && url.pathname === "/watch") {
             videoId = url.searchParams.get("v");
-            fetchTranscript(videoId)
+            fetchTranscript(videoId);
             fetchNotes(videoId);
         } else { }
     });
@@ -23,7 +63,7 @@ async function fetchTranscript(videoId) {
         if (summaryCount < FREE_LIMIT) {
             try {
                 const transcript = await getTranscriptFromRapidAPI(videoId);
-                document.getElementById('transcript').innerText = transcript;
+                document.querySelector('#transcript p').innerText = transcript;
                 chrome.storage.local.set({ ['transcript_' + videoId]: transcript });
 
                 summaryCount++;
@@ -84,7 +124,7 @@ async function fetchSummaryFromOpenAiAPI(transcriptAsText) {
 
                 let summary = await getSummaryFromOpenAiApi(transcriptAsText);
 
-                document.getElementById('summary').innerText = summary;
+                document.querySelector('#summary p').innerText = summary;
                 chrome.storage.local.set({ ['summary_' + videoId]: summary });
 
                 summaryCount++;
@@ -101,18 +141,18 @@ async function fetchSummaryFromOpenAiAPI(transcriptAsText) {
 }
 
 const maxTokens = 4096;
-const maxPromptTokens = maxTokens - 500; 
+const maxPromptTokens = maxTokens - 500;
 
 
 async function getSummaryFromOpenAiApi(transcriptAsText) {
     const apiKey = OPENAI_API_KEY;
 
-    const estimatedTokens = Math.ceil(transcriptAsText.length/4);
-    if(estimatedTokens> maxPromptTokens){
+    const estimatedTokens = Math.ceil(transcriptAsText.length / 4);
+    if (estimatedTokens > maxPromptTokens) {
         const maxLength = Math.floor(maxPromptTokens * 4);
-        transcriptAsText =  transcriptAsText.slice(0, maxLength);
+        transcriptAsText = transcriptAsText.slice(0, maxLength);
     }
-    
+
     if (summaryCount < FREE_LIMIT) {
         try {
             const response = await fetch('https://api.openai.com/v1/completions', {
@@ -199,6 +239,8 @@ function fetchNotes(videoId) {
         }
     });
 }
+
+document.getElementById('save-notes').addEventListener('click', saveNotes);
 
 function saveNotes() {
     let notes = document.getElementById('notes').value;

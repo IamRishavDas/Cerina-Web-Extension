@@ -1,6 +1,10 @@
 chrome.runtime.onInstalled.addListener(function() {
     chrome.storage.local.set({summaryCount: 0, subscribed: false});
   });
+
+chrome.runtime.onInstalled.addListener(function() {
+    chrome.storage.local.set({subCount: 0, subscribed: false});
+  });
   
 
 function handlePaymentVerification(paymentResponse) {
