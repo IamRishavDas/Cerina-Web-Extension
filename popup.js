@@ -4,7 +4,6 @@ const FREE_LIMIT = 3;
 const MAX_SUB_LIMIT = 2;
 
 
-
 document.addEventListener('DOMContentLoaded', function () {
     const showTranscriptBtn = document.querySelector('#transcript .btn-popup');
     const showSummaryBtn = document.querySelector('#summary .btn-popup');
@@ -26,9 +25,9 @@ document.addEventListener('DOMContentLoaded', function () {
     showTranscriptBtn.addEventListener('click', function () {
         const transcriptContent = document.getElementById('transcript').innerHTML;
         showPopup(transcriptContent);
-        // document.querySelector('.btns').addEventListener('click', ()=>{
-            
-        // });
+        document.querySelector('.copy').addEventListener('click', ()=>{
+           copyClipboard();
+        });
         document.querySelector('.popup-close').addEventListener('click', ()=>{
             closePopup();
         });
@@ -37,7 +36,9 @@ document.addEventListener('DOMContentLoaded', function () {
     showSummaryBtn.addEventListener('click', function () {
         const summaryContent = document.getElementById('summary').innerHTML;
         showPopup(summaryContent);
-        
+        document.querySelector('.copy').addEventListener('click', ()=>{
+            copyClipboard();
+         });
         document.querySelector('.popup-close').addEventListener('click', ()=>{
             closePopup();
         });
@@ -54,6 +55,23 @@ document.addEventListener('DOMContentLoaded', function () {
         } else { }
     });
 });
+
+
+async function copyClipboard() {
+    var copyClick = document.querySelector('.copy');
+    try {
+        var text = document.querySelector('#transcript p').innerText;
+        await navigator.clipboard.writeText(text);
+        copyClick.src = "icons/copyClick.png";
+        console.log(copyClick);
+    }
+    catch (e) {
+        console.log(e);
+    }
+    setTimeout(() => {
+        copyClick.src = "icons/copyIcon.png";
+    }, 2000)
+}
 
 
 async function fetchTranscript(videoId) {

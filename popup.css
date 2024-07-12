@@ -254,7 +254,7 @@ body {
     border: 1px solid #ccc;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 8px 8px 0 0;
+    border-radius: 10px 10px 10px 10px;
     display: none;
     z-index: 1000; /* Adjust the z-index to ensure it appears above other elements */
     overflow-x: hidden;
@@ -316,7 +316,6 @@ body {
     color: white;
   }
 
-
   
   .popup-close {
     position: absolute;
@@ -329,13 +328,34 @@ body {
 
   .copy{
     position: absolute;
-    top: 8px;
-    right: 35px;
+    top: 11px;
+    right: 40px;
     cursor: pointer;
     height: 20px;
     width: 20px;
     color: #888;
   }
+
+  .copy-text {
+    position: absolute;
+    background-color: var(--vb-violet2);
+    color: var(--vb-yellow);
+    font-size: 1.1rem;
+    top: -2.1rem;
+    left: -1.5rem;
+    padding: 0.2rem 1rem;
+    border-radius: 1rem;
+    border: 0.09rem solid var(--vb-yellow);
+
+    transform-origin: bottom;
+    transition: all 250ms ease-in-out;
+    display: none;
+}
+
+ .active-popup-text {
+    display: block;
+
+}
 
 
 
