@@ -4,6 +4,7 @@ const FREE_LIMIT = 3;
 const MAX_SUB_LIMIT = 2;
 
 
+
 document.addEventListener('DOMContentLoaded', function () {
     const showTranscriptBtn = document.querySelector('#transcript .btn-popup');
     const showSummaryBtn = document.querySelector('#summary .btn-popup');
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const transcriptContent = document.getElementById('transcript').innerHTML;
         showPopup(transcriptContent);
         document.querySelector('.copy').addEventListener('click', ()=>{
-           copyClipboard();
+           copyClipboard('transcript');
         });
         document.querySelector('.popup-close').addEventListener('click', ()=>{
             closePopup();
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const summaryContent = document.getElementById('summary').innerHTML;
         showPopup(summaryContent);
         document.querySelector('.copy').addEventListener('click', ()=>{
-            copyClipboard();
+            copyClipboard('summary');
          });
         document.querySelector('.popup-close').addEventListener('click', ()=>{
             closePopup();
@@ -57,10 +58,10 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
-async function copyClipboard() {
+async function copyClipboard(elementId) {
     var copyClick = document.querySelector('.copy');
     try {
-        var text = document.querySelector('#transcript p').innerText;
+        var text = document.querySelector(`#${elementId} p`).innerText;
         await navigator.clipboard.writeText(text);
         copyClick.src = "icons/copyClick.png";
         console.log(copyClick);
