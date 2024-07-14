@@ -39,13 +39,16 @@ Here are some screenshots showcasing the Cerina AI Chrome extension in action:
 ![Home Screen](./assets/1.png)
 
 ### Video Transcript
-![Video Transcript](path/to/video_transcript.png)
+![Video Transcript](./assets/2.png)
 
 ### Video Summary
-![Video Summary](path/to/video_summary.png)
+![Video Summary](./assets/3.png)
 
 ### Adding Notes
-![Adding Notes](path/to/adding_notes.png)
+![Adding Notes](./assets/4.png)
+
+### Video
+![Video](./assets/rec.mp4)
 
 ## Free Trials and Lifetime Access
 
