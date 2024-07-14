@@ -16,7 +16,7 @@ We are excited to introduce our latest innovation in the world of generative AI:
 
 1. Clone this repository to your local machine:
     ```sh
-    git clone https://github.com/yourusername/cerina-ai.git
+    git clone https://github.com/Tecosys/Cerina-Web-Extension
     ```
 2. Open Chrome and navigate to `chrome://extensions/`.
 3. Enable **Developer mode**.
@@ -46,7 +46,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contact
 
-For any queries or support, please contact us at [support@tecosys.com](mailto:support@tecosys.com).
+For any queries or support, please contact us at [https://www.tecosys.in](mailto:admin@tecosys.in).
 
 ---
 
