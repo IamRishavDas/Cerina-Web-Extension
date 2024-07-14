@@ -47,8 +47,6 @@ Here are some screenshots showcasing the Cerina AI Chrome extension in action:
 ### Adding Notes
 ![Adding Notes](./assets/4.png)
 
-### Video
-![Video](./assets/rec.mp4)
 
 ## Free Trials and Lifetime Access
 
