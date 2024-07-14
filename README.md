@@ -31,6 +31,22 @@ We are excited to introduce our latest innovation in the world of generative AI:
 3. Click on the buttons to get the transcript and summary of the video.
 4. Add your notes for the video and save them for future reference.
 
+## Screenshots
+
+Here are some screenshots showcasing the Cerina AI Chrome extension in action:
+
+### Home Screen
+![Home Screen](path/to/home_screen.png)
+
+### Video Transcript
+![Video Transcript](path/to/video_transcript.png)
+
+### Video Summary
+![Video Summary](path/to/video_summary.png)
+
+### Adding Notes
+![Adding Notes](path/to/adding_notes.png)
+
 ## Free Trials and Lifetime Access
 
 - **Free Trials:** Enjoy our free trials and experience the full capabilities of Cerina AI.
