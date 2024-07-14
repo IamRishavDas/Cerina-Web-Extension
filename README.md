@@ -36,7 +36,7 @@ We are excited to introduce our latest innovation in the world of generative AI:
 Here are some screenshots showcasing the Cerina AI Chrome extension in action:
 
 ### Home Screen
-![Home Screen](path/to/home_screen.png)
+![Home Screen](./assets/1.png)
 
 ### Video Transcript
 ![Video Transcript](path/to/video_transcript.png)
