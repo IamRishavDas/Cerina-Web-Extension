@@ -22,6 +22,8 @@ We are excited to introduce our latest innovation in the world of generative AI:
 3. Enable **Developer mode**.
 4. Click **Load unpacked** and select the cloned repository folder.
 
+**Note:** Cerina AI will be available soon in the Chrome Web Store for easier installation and updates. Stay tuned!
+
 ## Usage
 
 1. Navigate to a YouTube video.
@@ -39,10 +41,6 @@ We are excited to introduce our latest innovation in the world of generative AI:
 We value your feedback! Please share your thoughts and suggestions to help us improve Cerina AI.
 
 Thank you for choosing Tecosys!
-
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ## Contact
 
